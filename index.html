@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jotocho Score - Tabla Responsiva Completa</title>
+  <title>Jotocho Score - Validación de Puntajes</title>
 
   <style>
     body {
@@ -32,7 +32,6 @@
       display: none !important;
     }
 
-    /* Contenedor con scroll horizontal */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -41,7 +40,7 @@
     table {
       border-collapse: collapse;
       width: 100%;
-      min-width: 600px; /* fuerza scroll horizontal si la pantalla es pequeña */
+      min-width: 600px;
     }
 
     th, td {
@@ -59,7 +58,6 @@
       z-index: 1;
     }
 
-    /* Columna fija (nombre) */
     th:first-child, td:first-child {
       position: sticky;
       left: 0;
@@ -72,17 +70,14 @@
       z-index: 3;
     }
 
-    /* Zebra stripes */
     tbody tr:nth-child(even) td {
       background: #f9f9f9;
     }
 
-    /* Hover */
     tbody tr:hover td {
       background: #d8e6fa;
     }
 
-    /* Inputs y botones */
     input[type="number"],
     input[type="text"],
     select {
@@ -124,7 +119,6 @@
       margin-bottom: 18px;
     }
 
-    /* Botones agrupados y responsivos */
     .button-group {
       display: flex;
       flex-wrap: wrap;
@@ -203,14 +197,12 @@
     let scores = [];
     let editingRound = null;
 
-    // Guardar datos en localStorage
     function saveData() {
       localStorage.setItem('jotocho_numPlayers', numPlayers);
       localStorage.setItem('jotocho_playerNames', JSON.stringify(playerNames));
       localStorage.setItem('jotocho_scores', JSON.stringify(scores));
     }
 
-    // Cargar datos de localStorage
     function loadData() {
       const np = localStorage.getItem('jotocho_numPlayers');
       const pn = localStorage.getItem('jotocho_playerNames');
@@ -225,7 +217,6 @@
       }
     }
 
-    // Nuevo juego: borrar datos y reiniciar
     function newGame() {
       if (confirm('¿Seguro que quieres empezar un nuevo juego? Se perderán los datos actuales.')) {
         localStorage.clear();
@@ -331,6 +322,15 @@
           <input type="number" id="score${i}" value="${values[i] ?? ''}" min="0" />
         </div>`;
       }
+
+      // Añadir evento input para validar solo números
+      for (let i = 0; i < numPlayers; i++) {
+        const input = document.getElementById(`score${i}`);
+        input.addEventListener('input', (e) => {
+          // Eliminar cualquier carácter que no sea dígito
+          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+      }
     }
 
     function saveRound() {
@@ -395,7 +395,6 @@
       document.getElementById('scoreboard').innerHTML = html;
     }
 
-    // Cargar datos guardados al iniciar
     window.onload = () => {
       loadData();
     };
