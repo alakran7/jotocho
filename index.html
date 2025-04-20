@@ -124,6 +124,30 @@
         display: none;
       }
     }
+	
+	.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-start;
+}
+.button-group button {
+  flex: 1 1 120px;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .button-group button {
+    width: 100%;
+    flex: unset;
+    margin: 0;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -152,9 +176,11 @@
     <div class="table-wrapper">
       <div id="scoreboard"></div>
     </div>
-    <button onclick="editRound()">Editar</button>
-    <button onclick="addRound()">Agregar Ronda</button>
-    <button onclick="newGame()" class="cancel" style="float:right;">Nuevo Juego</button>
+<div class="button-group">
+  <button onclick="editRound()">Editar</button>
+  <button onclick="addRound()">Agregar Ronda</button>
+  <button onclick="newGame()" class="cancel">Nuevo Juego</button>
+</div>
   </div>
 
   <!-- Pantalla 4: Editar o agregar ronda -->
@@ -168,7 +194,7 @@
     </div>
 
     <form id="roundForm" class="edit-form"></form>
-    <button class="cancel" onclick="cancelRound()">Cancelar</button>
+	<button class="cancel" onclick="cancelRound()">Cancelar</button>
     <button onclick="saveRound()">Guardar</button>
   </div>
 
