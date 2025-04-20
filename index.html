@@ -124,6 +124,84 @@
         font-size: 1.5em;
       }
     }
+	
+	 /* Ajustes para móviles */
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px 12px;
+        margin: 15px 10px;
+      }
+      h2 {
+        font-size: 1.4em;
+      }
+      button {
+        padding: 14px 20px;
+        font-size: 1.1em;
+        width: 100%;
+        margin: 10px 0;
+      }
+      input[type="number"],
+      input[type="text"],
+      select {
+        font-size: 1.1em;
+        padding: 12px;
+      }
+      .table-wrapper {
+        overflow-x: auto;
+      }
+      table {
+        min-width: 100%; /* Quitar ancho fijo para que se adapte */
+        font-size: 0.9em;
+      }
+      th, td {
+        padding: 8px 6px;
+      }
+      /* Diseño tipo "card" para filas en móvil */
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      }
+      tbody td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+      tbody td:before {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 700;
+        color: #2d6cdf;
+      }
+      /* Etiquetas para cada columna */
+      tbody td:nth-of-type(1):before { content: "Nombre"; }
+      tbody td:nth-of-type(2):before { content: "Ronda 1"; }
+      tbody td:nth-of-type(3):before { content: "Ronda 2"; }
+      tbody td:nth-of-type(4):before { content: "Ronda 3"; }
+      tbody td:nth-of-type(5):before { content: "Total"; }
+      /* Quitar sticky y sombra en móvil para evitar problemas */
+      th:first-child, td:first-child {
+        position: static !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+    }
   </style>
 </head>
 <body>
