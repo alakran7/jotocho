@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jotocho Score - Validación de Puntajes</title>
+  <title>Jotocho Score - PWA Completa</title>
+
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2d6cdf" />
 
   <style>
     body {
@@ -31,25 +35,21 @@
     .hidden {
       display: none !important;
     }
-
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
-
     table {
       border-collapse: collapse;
       width: 100%;
       min-width: 600px;
     }
-
     th, td {
       padding: 10px 8px;
       border: 1px solid #ddd;
       text-align: center;
       white-space: nowrap;
     }
-
     th {
       background: #eaf1fb;
       font-weight: 700;
@@ -57,7 +57,6 @@
       top: 0;
       z-index: 1;
     }
-
     th:first-child, td:first-child {
       position: sticky;
       left: 0;
@@ -65,19 +64,15 @@
       z-index: 2;
       box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
     }
-
     th:first-child {
       z-index: 3;
     }
-
     tbody tr:nth-child(even) td {
       background: #f9f9f9;
     }
-
     tbody tr:hover td {
       background: #d8e6fa;
     }
-
     input[type="number"],
     input[type="text"],
     select {
@@ -89,7 +84,6 @@
       width: 100%;
       box-sizing: border-box;
     }
-
     button {
       background: #2d6cdf;
       color: #fff;
@@ -102,23 +96,18 @@
       transition: background 0.2s;
       box-shadow: 0 2px 8px rgba(45, 108, 223, 0.06);
     }
-
     button:hover {
       background: #174fa3;
     }
-
     button.cancel {
       background: #f44336;
     }
-
     button.cancel:hover {
       background: #b71c1c;
     }
-
     .form-group {
       margin-bottom: 18px;
     }
-
     .button-group {
       display: flex;
       flex-wrap: wrap;
@@ -197,12 +186,14 @@
     let scores = [];
     let editingRound = null;
 
+    // Guardar datos en localStorage
     function saveData() {
       localStorage.setItem('jotocho_numPlayers', numPlayers);
       localStorage.setItem('jotocho_playerNames', JSON.stringify(playerNames));
       localStorage.setItem('jotocho_scores', JSON.stringify(scores));
     }
 
+    // Cargar datos de localStorage
     function loadData() {
       const np = localStorage.getItem('jotocho_numPlayers');
       const pn = localStorage.getItem('jotocho_playerNames');
@@ -217,6 +208,7 @@
       }
     }
 
+    // Nuevo juego: borrar datos y reiniciar
     function newGame() {
       if (confirm('¿Seguro que quieres empezar un nuevo juego? Se perderán los datos actuales.')) {
         localStorage.clear();
@@ -323,11 +315,10 @@
         </div>`;
       }
 
-      // Añadir evento input para validar solo números
+      // Validación: solo números en inputs de puntaje
       for (let i = 0; i < numPlayers; i++) {
         const input = document.getElementById(`score${i}`);
         input.addEventListener('input', (e) => {
-          // Eliminar cualquier carácter que no sea dígito
           e.target.value = e.target.value.replace(/[^0-9]/g, '');
         });
       }
@@ -398,6 +389,13 @@
     window.onload = () => {
       loadData();
     };
+
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker registrado'))
+        .catch(err => console.error('Error registrando Service Worker:', err));
+    }
   </script>
 </body>
 </html>
