@@ -31,47 +31,64 @@
       display: none !important;
     }
     /* Contenedor con scroll horizontal */
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 600px; /* para forzar scroll en pantallas pequeñas */
-    }
-    th, td {
-      padding: 10px 8px;
-      border: 1px solid #ddd;
-      text-align: center;
-      white-space: nowrap;
-    }
-    th {
-      background: #eaf1fb;
-      font-weight: 700;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-    /* Columna fija (nombre) */
-    th:first-child, td:first-child {
-      position: sticky;
-      left: 0;
-      background: #fff;
-      z-index: 2;
-      box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
-    }
-    th:first-child {
-      z-index: 3;
-    }
-    /* Zebra stripes */
-    tbody tr:nth-child(even) td {
-      background: #f9f9f9;
-    }
-    /* Hover */
-    tbody tr:hover td {
-      background: #d8e6fa;
-    }
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 600px; /* para forzar scroll en pantallas pequeñas */
+}
+th, td {
+  padding: 10px 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  white-space: nowrap;
+}
+th {
+  background: #eaf1fb;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+/* Columna fija (nombre) */
+th:first-child, td:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 2;
+  box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+}
+th:first-child {
+  z-index: 3;
+}
+/* Zebra stripes */
+tbody tr:nth-child(even) td {
+  background: #f9f9f9;
+}
+/* Hover */
+tbody tr:hover td {
+  background: #d8e6fa;
+}
+
+/* Media queries para controlar cuántas columnas mostrar */
+
+/* En pantallas < 900px, mostrar máximo 5 rondas (ocultar ronda 6 en adelante) */
+@media (max-width: 900px) {
+  .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
+    display: none;
+  }
+}
+
+/* En pantallas < 700px, mostrar máximo 4 rondas (ocultar ronda 5 en adelante) */
+@media (max-width: 700px) {
+  .col-round-5, .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
+    display: none;
+  }
+}
+
     /* Inputs y botones */
     input[type="number"],
     input[type="text"],
@@ -107,22 +124,6 @@
     }
     .form-group {
       margin-bottom: 18px;
-    }
-    /* Media queries para controlar cuántas columnas mostrar */
-    /* Por defecto mostramos todas */
-    /* En pantallas < 900px mostramos máximo 4 rondas + nombre + total */
-    @media (max-width: 900px) {
-      /* Ocultar columnas de ronda > 4 */
-      /* Usamos clases para controlar columnas */
-      .col-round-5, .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
-        display: none;
-      }
-    }
-    /* En pantallas < 700px mostramos máximo 2 rondas + nombre + total */
-    @media (max-width: 700px) {
-      .col-round-3, .col-round-4, .col-round-5, .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
-        display: none;
-      }
     }
   </style>
 </head>
