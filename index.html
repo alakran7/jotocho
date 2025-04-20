@@ -159,13 +159,22 @@ tbody tr:hover td {
 
   <!-- Pantalla 4: Editar o agregar ronda -->
   <div class="container hidden" id="screen4">
-    <h2>Editar Puntajes</h2>
-    <label for="roundSelector">Seleccionar Ronda:</label>
-    <select id="roundSelector" onchange="loadRoundData()"></select>
-    <form id="roundForm" class="edit-form"></form>
-    <button class="cancel" onclick="cancelRound()">Cancelar</button>
-    <button onclick="saveRound()">Guardar</button>
+  <h2>Editar Puntajes</h2>
+
+  <!-- Texto para nueva ronda -->
+  <div id="roundNumberContainer" style="margin-bottom: 15px; font-weight: bold; font-size: 1.2em; display: none;">
+    Ronda # <span id="roundNumber"></span>
   </div>
+
+  <!-- Selector para editar ronda -->
+  <label for="roundSelector" id="roundSelectorLabel" style="display: none;">Seleccionar Ronda:</label>
+  <select id="roundSelector" onchange="loadRoundData()" style="display: none;"></select>
+
+  <form id="roundForm" class="edit-form"></form>
+  <button class="cancel" onclick="cancelRound()">Cancelar</button>
+  <button onclick="saveRound()">Guardar</button>
+</div>
+
 
 <script>
   let numPlayers = 0;
@@ -212,30 +221,47 @@ tbody tr:hover td {
     document.getElementById('screen' + n).classList.remove('hidden');
   }
 
-  function editRound() {
-    if (scores.length === 0) {
-      alert("No hay rondas para editar todavía");
-      return;
-    }
-    let roundSelector = document.getElementById('roundSelector');
-    roundSelector.innerHTML = '';
-    for (let i = 0; i < scores.length; i++) {
-      let hasValues = scores[i] && scores[i].some(score => score !== null && score !== '' && score !== 0);
-      if (hasValues) {
-        let option = document.createElement('option');
-        option.value = i;
-        option.text = `Ronda ${i + 1}`;
-        roundSelector.appendChild(option);
-      }
-    }
-    if (roundSelector.options.length === 0) {
-      alert("No hay rondas con datos para editar");
-      return;
-    }
-    editingRound = parseInt(roundSelector.value);
-    loadRoundData();
-    showScreen(4);
+function editRound() {
+  if (scores.length === 0) {
+    alert("No hay rondas para editar todavía");
+    return;
   }
+
+  // Mostrar selector y su label
+  let roundSelector = document.getElementById('roundSelector');
+  let roundSelectorLabel = document.getElementById('roundSelectorLabel');
+  roundSelector.style.display = 'inline-block';
+  roundSelectorLabel.style.display = 'inline-block';
+
+  // Ocultar texto "Ronda # X"
+  document.getElementById('roundNumberContainer').style.display = 'none';
+
+  // Cargar opciones en selector
+  roundSelector.innerHTML = '';
+  for (let i = 0; i < scores.length; i++) {
+    let hasValues = scores[i] && scores[i].some(score => score !== null && score !== '' && score !== 0);
+    if (hasValues) {
+      let option = document.createElement('option');
+      option.value = i;
+      option.text = `Ronda ${i + 1}`;
+      roundSelector.appendChild(option);
+    }
+  }
+  if (roundSelector.options.length === 0) {
+    alert("No hay rondas con datos para editar");
+    return;
+  }
+  editingRound = parseInt(roundSelector.value);
+  loadRoundData();
+  showScreen(4);
+}
+  
+  
+  
+  
+  
+  
+  
 
   function loadRoundData() {
     let roundSelector = document.getElementById('roundSelector');
@@ -245,9 +271,16 @@ tbody tr:hover td {
 
   function addRound() {
     editingRound = scores.length;
-    document.getElementById('roundSelector').innerHTML = '';
-    renderRoundForm(Array(numPlayers).fill(''));
-    showScreen(4);
+  // Ocultar selector y su label
+  document.getElementById('roundSelector').style.display = 'none';
+  document.getElementById('roundSelectorLabel').style.display = 'none';
+
+  // Mostrar texto "Ronda # X"
+  document.getElementById('roundNumberContainer').style.display = 'block';
+  document.getElementById('roundNumber').textContent = editingRound + 1;
+
+  renderRoundForm(Array(numPlayers).fill(''));
+  showScreen(4);
   }
 
   function renderRoundForm(values) {
