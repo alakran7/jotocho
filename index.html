@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jotocho Score - PWA con persistencia</title>
-
-  <!-- Manifest PWA -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#2d6cdf" />
+  <title>Jotocho Score - Tabla Responsiva Completa</title>
 
   <style>
     body {
@@ -35,22 +31,26 @@
     .hidden {
       display: none !important;
     }
+
     /* Contenedor con scroll horizontal */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
+
     table {
       border-collapse: collapse;
       width: 100%;
-      min-width: 600px; /* para forzar scroll en pantallas pequeñas */
+      min-width: 600px; /* fuerza scroll horizontal si la pantalla es pequeña */
     }
+
     th, td {
       padding: 10px 8px;
       border: 1px solid #ddd;
       text-align: center;
       white-space: nowrap;
     }
+
     th {
       background: #eaf1fb;
       font-weight: 700;
@@ -58,6 +58,7 @@
       top: 0;
       z-index: 1;
     }
+
     /* Columna fija (nombre) */
     th:first-child, td:first-child {
       position: sticky;
@@ -66,17 +67,21 @@
       z-index: 2;
       box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
     }
+
     th:first-child {
       z-index: 3;
     }
+
     /* Zebra stripes */
     tbody tr:nth-child(even) td {
       background: #f9f9f9;
     }
+
     /* Hover */
     tbody tr:hover td {
       background: #d8e6fa;
     }
+
     /* Inputs y botones */
     input[type="number"],
     input[type="text"],
@@ -89,6 +94,7 @@
       width: 100%;
       box-sizing: border-box;
     }
+
     button {
       background: #2d6cdf;
       color: #fff;
@@ -101,53 +107,46 @@
       transition: background 0.2s;
       box-shadow: 0 2px 8px rgba(45, 108, 223, 0.06);
     }
+
     button:hover {
       background: #174fa3;
     }
+
     button.cancel {
       background: #f44336;
     }
+
     button.cancel:hover {
       background: #b71c1c;
     }
+
     .form-group {
       margin-bottom: 18px;
     }
-    /* Media queries para controlar cuántas columnas mostrar */
-    @media (max-width: 900px) {
-      .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
-        display: none;
-      }
-    }
-    @media (max-width: 700px) {
-      .col-round-5, .col-round-6, .col-round-7, .col-round-8, .col-round-9, .col-round-10 {
-        display: none;
-      }
-    }
-	
-	.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-  justify-content: flex-start;
-}
-.button-group button {
-  flex: 1 1 120px;
-  min-width: 0;
-}
-@media (max-width: 600px) {
-  .button-group {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .button-group button {
-    width: 100%;
-    flex: unset;
-    margin: 0;
-  }
-}
 
+    /* Botones agrupados y responsivos */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-start;
+    }
+    .button-group button {
+      flex: 1 1 120px;
+      min-width: 0;
+    }
+    @media (max-width: 600px) {
+      .button-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .button-group button {
+        width: 100%;
+        flex: unset;
+        margin: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -176,11 +175,11 @@
     <div class="table-wrapper">
       <div id="scoreboard"></div>
     </div>
-<div class="button-group">
-  <button onclick="editRound()">Editar</button>
-  <button onclick="addRound()">Agregar Ronda</button>
-  <button onclick="newGame()" class="cancel">Nuevo Juego</button>
-</div>
+    <div class="button-group">
+      <button onclick="editRound()">Editar</button>
+      <button onclick="addRound()">Agregar Ronda</button>
+      <button onclick="newGame()" class="cancel">Nuevo Juego</button>
+    </div>
   </div>
 
   <!-- Pantalla 4: Editar o agregar ronda -->
@@ -194,7 +193,7 @@
     </div>
 
     <form id="roundForm" class="edit-form"></form>
-	<button class="cancel" onclick="cancelRound()">Cancelar</button>
+    <button class="cancel" onclick="cancelRound()">Cancelar</button>
     <button onclick="saveRound()">Guardar</button>
   </div>
 
@@ -400,13 +399,6 @@
     window.onload = () => {
       loadData();
     };
-
-    // Registrar Service Worker para PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker registrado'))
-        .catch(err => console.error('Error registrando Service Worker:', err));
-    }
   </script>
 </body>
 </html>
